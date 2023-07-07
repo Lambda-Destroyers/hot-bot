@@ -1,3 +1,4 @@
+
 Our Product
 Lambda Destroyers wants "hot bot" to give you a hands off experience when it comes to crypto trading online. Pulling data online that gives you the chance to invest and forget.
 
@@ -46,7 +47,4 @@ Acceptance Tests:
 Validate that the generated trading history accurately reflects the bot's executed trades.
 Ensure that the ROI calculations are accurate and aligned with the expected results.
 Verify that the generated reports are comprehensive, easy to understand.
-
-
-
 

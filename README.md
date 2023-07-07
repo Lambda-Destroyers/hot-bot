@@ -19,3 +19,5 @@ returns in the stock exchange.
 
 **MetaTrader is a resource that Roger recommends.  Buy and sell in a fake environment!
 
+
+![7cf52b77b1de96204a11217283aaa34e](https://github.com/401-python-midterm/hot-bot/assets/71305940/ddd28e80-636c-4c14-840d-77c8bbc1bfed)
