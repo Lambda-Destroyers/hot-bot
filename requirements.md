@@ -5,7 +5,7 @@ Lambda Destroyers wants "hot bot" to give you a hands off experience when it com
 Investing online can be time consuming and complicated. This takes all the time and headache of having to do it all yourself.
 
 Our product is guranteed to give you insights into trading like never before. It pulls market data online and gives you a guaranteed source of income using online sources.
-
+We are using the coinbase API for stretch goal. 
 
 
   User Stories
