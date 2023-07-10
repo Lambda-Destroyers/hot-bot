@@ -24,3 +24,20 @@ returns in the stock exchange.
 
 ## Wireframe
 ![b3be7ca5dcf55e128df84933e8204f13](https://github.com/Lambda-Destroyers/hot-bot/assets/71305940/c1fd4bf3-ea9a-465d-b8ef-d32d6d8fa488)
+
+
+Advanced Trade API
+
+Get started:
+python3 -m venv .venv
+pip3 install rich
+pip3 install requests
+pip3 install matplotlib
+
+run test:
+python3/python filename.py
+
+Testing API key
+<!-- Read the documentation:  -->
+import requests
+
