@@ -1,8 +1,6 @@
 import requests
 import datetime
 import matplotlib.pyplot as plt
-#import matplotlib
-#matplotlib.use('TkAgg')
 
 # Read the API key from api_key.txt file
 with open('api_key.txt', 'r') as file:
@@ -80,3 +78,4 @@ fig.autofmt_xdate()  # Automatically format the x-axis labels to avoid overlappi
 
 plt.tight_layout()
 plt.show()
+
