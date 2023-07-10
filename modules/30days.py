@@ -1,7 +1,6 @@
 import requests
 import datetime
 import matplotlib.pyplot as plt
-import matplotlib.dates as mdates
 
 # Read the API key from api_key.txt file
 with open('api_key.txt', 'r') as file:
@@ -31,7 +30,7 @@ api_url = "https://api.pro.coinbase.com/products"
 
 # Calculate the start and end dates
 end_date = datetime.datetime.now()
-start_date = end_date - datetime.timedelta(days=180)
+start_date = end_date - datetime.timedelta(days=30)
 
 # Function to retrieve historical data for a given product
 def get_historical_data(product_id):
@@ -47,7 +46,7 @@ def get_historical_data(product_id):
 
 # Retrieve historical data for BTC-USD
 btc_data = get_historical_data("BTC-USD")
-btc_timestamps = [mdates.date2num(datetime.datetime.fromtimestamp(int(entry[0]))) for entry in btc_data]
+btc_timestamps = [datetime.datetime.fromtimestamp(int(entry[0])) for entry in btc_data]
 btc_opens = [entry[3] for entry in btc_data]
 btc_highs = [entry[2] for entry in btc_data]
 btc_lows = [entry[1] for entry in btc_data]
@@ -55,38 +54,28 @@ btc_closes = [entry[4] for entry in btc_data]
 
 # Retrieve historical data for ETH-USD
 eth_data = get_historical_data("ETH-USD")
-eth_timestamps = [mdates.date2num(datetime.datetime.fromtimestamp(int(entry[0]))) for entry in eth_data]
+eth_timestamps = [datetime.datetime.fromtimestamp(int(entry[0])) for entry in eth_data]
 eth_opens = [entry[3] for entry in eth_data]
 eth_highs = [entry[2] for entry in eth_data]
 eth_lows = [entry[1] for entry in eth_data]
 eth_closes = [entry[4] for entry in eth_data]
 
-# Plotting Bitcoin (BTC-USD) chart
-fig, ax = plt.subplots()
-ax.xaxis.set_major_formatter(mdates.DateFormatter('%Y-%m-%d'))
-ax.xaxis.set_major_locator(mdates.MonthLocator())
-ax.plot(btc_timestamps, btc_closes, color='blue')
-ax.vlines(btc_timestamps, btc_lows, btc_highs, color='black', linewidth=1)
+# Plotting Bitcoin (BTC-USD) and Ethereum (ETH-USD) charts
+fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(10, 8))
 
-plt.title("Bitcoin (BTC-USD) - 180 Day Historical Data")
-plt.xlabel("Date")
-plt.ylabel("Price (USD)")
+ax1.plot(btc_timestamps, btc_closes, color='blue')
+ax1.vlines(btc_timestamps, btc_lows, btc_highs, color='black', linewidth=1)
+ax1.set_title("Bitcoin (BTC-USD) - 30 Day Historical Data")
+ax1.set_xlabel("Date")
+ax1.set_ylabel("Price (USD)")
 
-plt.xticks(rotation=45)
-plt.tight_layout()
-plt.show()
+ax2.plot(eth_timestamps, eth_closes, color='green')
+ax2.vlines(eth_timestamps, eth_lows, eth_highs, color='black', linewidth=1)
+ax2.set_title("Ethereum (ETH-USD) - 30 Day Historical Data")
+ax2.set_xlabel("Date")
+ax2.set_ylabel("Price (USD)")
 
-# Plotting Ethereum (ETH-USD) chart
-fig, ax = plt.subplots()
-ax.xaxis.set_major_formatter(mdates.DateFormatter('%Y-%m-%d'))
-ax.xaxis.set_major_locator(mdates.MonthLocator())
-ax.plot(eth_timestamps, eth_closes, color='green')
-ax.vlines(eth_timestamps, eth_lows, eth_highs, color='black', linewidth=1)
+fig.autofmt_xdate()  # Automatically format the x-axis labels to avoid overlapping
 
-plt.title("Ethereum (ETH-USD) - 180 Day Historical Data")
-plt.xlabel("Date")
-plt.ylabel("Price (USD)")
-
-plt.xticks(rotation=45)
 plt.tight_layout()
 plt.show()
