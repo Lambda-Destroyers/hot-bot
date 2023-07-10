@@ -1,11 +1,12 @@
 import requests
 import datetime
 import matplotlib.pyplot as plt
+#import matplotlib
+#matplotlib.use('TkAgg')
 
 # Read the API key from api_key.txt file
 with open('api_key.txt', 'r') as file:
     api_key = file.read().strip()
-
 headers = {
     "CB-ACCESS-KEY": api_key,
 }
