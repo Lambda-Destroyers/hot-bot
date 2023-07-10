@@ -1,6 +1,7 @@
 import requests
 import datetime
 import matplotlib.pyplot as plt
+import matplotlib
 
 # Read the API key from api_key.txt file
 with open('api_key.txt', 'r') as file:
@@ -78,4 +79,5 @@ ax2.set_ylabel("Price (USD)")
 fig.autofmt_xdate()  # Automatically format the x-axis labels to avoid overlapping
 
 plt.tight_layout()
+plt.savefig("figure.png")
 plt.show()
