@@ -33,8 +33,9 @@ Get started:
 python3 -m venv .venv
 pip3 install rich --- Library that allows you to create visually appealing and interactive text-based interfaces in the terminal.
 pip3 install requests --- This allows for requests from API
-pip3 install matplotlib --- library for creating visualizations and plots
+pip3 install matplotlib --- library for creating charts
 pip3 install pytest-cov --- This is for coverage testing
+pip3 install openapi --- chatGPT api
 
 
 
