@@ -1,6 +1,7 @@
 api_key.txt
 api_key.py
 requirements.txt
+gpt_api.txt
 
 Source: https://github.com/github/gitignore/blob/master/Python.gitignore
 
