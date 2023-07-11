@@ -9,6 +9,13 @@ while True:
     Console.print('\n1. Help\n2. Strategy\n3. Engage AI\n4. Historical Trends\n5. Sandbox\n6. Set It Loose\n7. Exit')
     choice = Prompt.ask('Choose a task (Enter the number)', choices=["1", "2", "3", "4", "5", "6"], default='6')
 
+    # def prompt_choice(message, choices, default=None):
+    # while True:
+    #     choice = Prompt.ask(message, choices=choices, default=default)
+    #     if choice in choices:
+    #         return choice
+    #     Console.print("Invalid choice. Please try again.")
+
     if choice == '1':
         help = Prompt.ask('Would you like Help?: ', choices=['Yes', 'No'], default='No')
         if help == 'Yes':
@@ -39,17 +46,17 @@ while True:
             
         
 
-    elif choice == '3':
-        engage_ai = Prompt.ask('Would you like to engage the AI?: ', choices=['Yes', 'No'], default='No')
+      elif choice == '3':
+          engage_ai = Prompt.ask('Would you like to engage the AI?: ', choices=['Yes', 'No'], default='No')
 
-    elif choice == '4':
-        warning()
+      elif choice == '4':
+          warning()
 
-    elif choice == '5':
-        count_file_types()
+      elif choice == '5':
+          count_file_types()
 
-    elif choice == '6':
-        do_exit('Thank you for using the menu')
+      elif choice == '6':
+          do_exit('Thank you for using the menu')
 
-    else:
-        console.print('Invalid choice. Please try again.')
+      else:
+          console.print('Invalid choice. Please try again.')
