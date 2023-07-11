@@ -18,7 +18,7 @@ def get_historical_data(product_id, start_date, end_date):
     params = {
         "start": start_date.isoformat(),
         "end": end_date.isoformat(),
-        "granularity": 86400,  # Daily granularity (86400 seconds = 1 day)
+        "granularity": 3600,  # Hourly granularity (3600 seconds = 1 hour)
     }
     response = requests.get(candles_url, params=params)
     data = response.json()
@@ -33,12 +33,25 @@ def get_current_price(product_id):
 
 # Function to perform DCA investments
 def dca_investments(btc_data, eth_data, start_date, end_date, investment_amount, investment_frequency):
+    # Extract the necessary data from btc_data and eth_data dictionaries
+    btc_timestamps = [datetime.datetime.fromtimestamp(int(entry[0])) for entry in btc_data['data']]
+    btc_opens = [entry[3] for entry in btc_data['data']]
+    btc_highs = [entry[2] for entry in btc_data['data']]
+    btc_lows = [entry[1] for entry in btc_data['data']]
+    btc_closes = [entry[4] for entry in btc_data['data']]
+
+    eth_timestamps = [datetime.datetime.fromtimestamp(int(entry[0])) for entry in eth_data['data']]
+    eth_opens = [entry[3] for entry in eth_data['data']]
+    eth_highs = [entry[2] for entry in eth_data['data']]
+    eth_lows = [entry[1] for entry in eth_data['data']]
+    eth_closes = [entry[4] for entry in eth_data['data']]
+
     # Retrieve current prices for BTC-USD and ETH-USD
     btc_usd_price = get_current_price("BTC-USD")
     eth_usd_price = get_current_price("ETH-USD")
 
     # Calculate the number of investment periods
-    num_periods = (end_date - start_date).days // investment_frequency.days
+    num_periods = len(btc_closes)
 
     # Initialize investment tracking variables
     total_investment = 0
@@ -46,9 +59,9 @@ def dca_investments(btc_data, eth_data, start_date, end_date, investment_amount,
 
     # Perform DCA investments
     for i in range(num_periods):
-        investment_date = start_date + i * investment_frequency
-        btc_price = btc_data[i][4]
-        eth_price = eth_data[i][4]
+        investment_date = start_date + datetime.timedelta(hours=i)  # Increment by 1 hour
+        btc_price = btc_closes[i]
+        eth_price = eth_closes[i]
 
         btc_investment = investment_amount / btc_price
         eth_investment = investment_amount / eth_price
@@ -58,17 +71,21 @@ def dca_investments(btc_data, eth_data, start_date, end_date, investment_amount,
         investment_values.append(current_value)
 
     # Plot investment performance
-    investment_dates = [start_date + i * investment_frequency for i in range(num_periods)]
+    investment_dates = [start_date + datetime.timedelta(hours=i) for i in range(num_periods)]
 
-    fig, ax = plt.subplots()
-    ax.plot(investment_dates, investment_values)
-    ax.set_title("Dollar Cost Averaging (DCA) Investment Performance")
-    ax.set_xlabel("Investment Date")
-    ax.set_ylabel("Investment Value (USD)")
+    fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(10, 8))
 
-    # Format x-axis labels as dates
-    ax.xaxis.set_major_formatter(mdates.DateFormatter('%Y-%m-%d'))
-    ax.xaxis.set_major_locator(mdates.DayLocator())
+    ax1.plot(btc_timestamps, btc_closes, color='blue')
+    ax1.vlines(btc_timestamps, btc_lows, btc_highs, color='black', linewidth=1)
+    ax1.set_title("Bitcoin (BTC-USD) - 30 Day Historical Data")
+    ax1.set_xlabel("Date")
+    ax1.set_ylabel("Price (USD)")
+
+    ax2.plot(eth_timestamps, eth_closes, color='green')
+    ax2.vlines(eth_timestamps, eth_lows, eth_highs, color='black', linewidth=1)
+    ax2.set_title("Ethereum (ETH-USD) - 30 Day Historical Data")
+    ax2.set_xlabel("Date")
+    ax2.set_ylabel("Price (USD)")
 
     fig.autofmt_xdate()  # Automatically format the x-axis labels to avoid overlapping
 
@@ -87,7 +104,7 @@ def main():
     eth_data = get_historical_data("ETH-USD", start_date, end_date)
 
     # Perform DCA with a 30-day investment period
-    dca_investments(btc_data, eth_data, start_date, end_date, investment_amount=1000, investment_frequency=datetime.timedelta(weeks=1))
+    dca_investments(btc_data, eth_data, start_date, end_date, investment_amount=1000, investment_frequency=datetime.timedelta(hours=1))
 
 
 if __name__ == "__main__":

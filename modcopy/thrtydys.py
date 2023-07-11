@@ -33,7 +33,7 @@ end_date = datetime.datetime.now()
 start_date = end_date - datetime.timedelta(days=30)
 
 # Function to retrieve historical data for a given product
-def get_historical_data(product_id):
+def get_historical_data(product_id, start_date, end_date):
     candles_url = f"{api_url}/{product_id}/candles"
     params = {
         "start": start_date.isoformat(),
@@ -45,7 +45,7 @@ def get_historical_data(product_id):
     return data
 
 # Retrieve historical data for BTC-USD
-btc_data = get_historical_data("BTC-USD")
+btc_data = get_historical_data("BTC-USD", start_date, end_date)
 btc_timestamps = [datetime.datetime.fromtimestamp(int(entry[0])) for entry in btc_data]
 btc_opens = [entry[3] for entry in btc_data]
 btc_highs = [entry[2] for entry in btc_data]
@@ -53,7 +53,7 @@ btc_lows = [entry[1] for entry in btc_data]
 btc_closes = [entry[4] for entry in btc_data]
 
 # Retrieve historical data for ETH-USD
-eth_data = get_historical_data("ETH-USD")
+eth_data = get_historical_data("ETH-USD", start_date, end_date)
 eth_timestamps = [datetime.datetime.fromtimestamp(int(entry[0])) for entry in eth_data]
 eth_opens = [entry[3] for entry in eth_data]
 eth_highs = [entry[2] for entry in eth_data]
