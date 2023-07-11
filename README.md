@@ -29,15 +29,20 @@ returns in the stock exchange.
 Advanced Trade API
 
 Get started:
+  pip or pip3
 python3 -m venv .venv
-pip3 install rich
-pip3 install requests
-pip3 install matplotlib
+pip3 install rich --- Library that allows you to create visually appealing and interactive text-based interfaces in the terminal.
+pip3 install requests --- This allows for requests from API
+pip3 install matplotlib --- library for creating visualizations and plots
+pip3 install pytest-cov --- This is for coverage testing
 
-run test:
+
+
+Run file:
 python3/python filename.py
 
-Testing API key
-<!-- Read the documentation:  -->
-import requests
+Test Coverage: 
+pytest --cov tests/
 
+Advanced Trade API
+<!-- Read the documentation:  https://docs.cloud.coinbase.com/advanced-trade-api/docs/welcome-->
