@@ -8,7 +8,6 @@ with open('api_key.txt', 'r') as file:
 headers = {
     "CB-ACCESS-KEY": api_key,
 }
-
 # Function to retrieve the current price of a given cryptocurrency
 def get_current_price(product_id):
     url = f"https://api.coinbase.com/v2/prices/{product_id}/spot"
