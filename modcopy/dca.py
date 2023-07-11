@@ -5,7 +5,7 @@ import math
 import logging
 import threading
 
-# from bard.api import BardAPI
+from bard.api import BardAPI
 
 
 def get_latest_prices():
