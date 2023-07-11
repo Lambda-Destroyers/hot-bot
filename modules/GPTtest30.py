@@ -10,6 +10,10 @@ headers = {
     "CB-ACCESS-KEY": api_key,
 }
 
+# Read the API key from gpt_key.txt file
+with open('gpt_api.txt', 'r') as file:
+    gpt_api = file.read().strip()
+
 # Function to retrieve the current price of a given cryptocurrency
 def get_current_price(product_id):
     url = f"https://api.coinbase.com/v2/prices/{product_id}/spot"
@@ -84,7 +88,7 @@ def get_investment_recommendation(btc_data, eth_data):
     url = "https://api.openai.com/v1/engines/text-davinci-003/completions"
     headers = {
         "Content-Type": "application/json",
-        "Authorization": "Bearer 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",
+        "Authorization": f"Bearer {gpt_api}",
     }
     btc_price = btc_data[0][4]
     eth_price = eth_data[0][4]
