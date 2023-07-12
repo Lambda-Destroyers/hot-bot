@@ -99,7 +99,7 @@ def get_investment_recommendation(btc_data, eth_data):
     body = {
         "prompt": prompt,
         "max_tokens": 585,
-        "temperature": 0.9
+        "temperature": 0.1
     }
     print("prompt: ", prompt)
     response = requests.post(url, headers=headers, json=body, timeout=120)
