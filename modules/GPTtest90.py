@@ -2,6 +2,9 @@ import requests
 import json
 import datetime
 import matplotlib.pyplot as plt
+from investment_recommendation import get_investment_recommendation
+from historical_getter import get_historical_data
+from current_price import get_current_price
 
 # Read the API key from api_key.txt file
 with open('api_key.txt', 'r') as file:
@@ -14,16 +17,9 @@ headers = {
 with open('gpt_api.txt', 'r') as file:
     gpt_api = file.read().strip()
 
-# Function to retrieve the current price of a given cryptocurrency
-def get_current_price(product_id):
-    url = f"https://api.coinbase.com/v2/prices/{product_id}/spot"
-    response = requests.get(url, headers=headers)
-    data = response.json()
-    return data['data']['amount']
-
 # Retrieve current prices for BTC-USD and ETH-USD
-btc_usd_price = get_current_price("BTC-USD")
-eth_usd_price = get_current_price("ETH-USD")
+btc_usd_price = get_current_price("BTC-USD", headers)
+eth_usd_price = get_current_price("ETH-USD", headers)
 
 # Print current prices
 print("BTC-USD price:", btc_usd_price)
@@ -37,20 +33,9 @@ end_date = datetime.datetime.now()
 start_date = end_date - datetime.timedelta(days=90)
 print("this is the start date: ", start_date)
 
-# Function to retrieve historical data for a given product
-def get_historical_data(product_id):
-    candles_url = f"{api_url}/{product_id}/candles"
-    params = {
-        "start": start_date.isoformat(),
-        "end": end_date.isoformat(),
-        "granularity": 86400,  # Daily granularity (86400 seconds = 1 day)
-    }
-    response = requests.get(candles_url, params=params)
-    data = response.json()
-    return data
 
 # Retrieve historical data for BTC-USD
-btc_data = get_historical_data("BTC-USD")
+btc_data = get_historical_data("BTC-USD", api_url, start_date, end_date)
 btc_timestamps = [datetime.datetime.fromtimestamp(int(entry[0])) for entry in btc_data]
 btc_opens = [entry[3] for entry in btc_data]
 btc_highs = [entry[2] for entry in btc_data]
@@ -58,7 +43,7 @@ btc_lows = [entry[1] for entry in btc_data]
 btc_closes = [entry[4] for entry in btc_data]
 
 # Retrieve historical data for ETH-USD
-eth_data = get_historical_data("ETH-USD")
+eth_data = get_historical_data("ETH-USD", api_url, start_date, end_date)
 eth_timestamps = [datetime.datetime.fromtimestamp(int(entry[0])) for entry in eth_data]
 eth_opens = [entry[3] for entry in eth_data]
 eth_highs = [entry[2] for entry in eth_data]
@@ -85,42 +70,9 @@ fig.autofmt_xdate()  # Automatically format the x-axis labels to avoid overlappi
 plt.tight_layout()
 plt.show()
 
-def get_investment_recommendation(btc_data, eth_data):
-    url = "https://api.openai.com/v1/engines/text-davinci-003/completions"
-    headers = {
-        "Content-Type": "application/json",
-        "Authorization": f"Bearer {gpt_api}",
-    }
-    btc_price = btc_data[0][4]
-    eth_price = eth_data[0][4]
-    btc_prompt = f"\n\nBTC-USD historical data:\n- Opens: {btc_opens}\n- Highs: {btc_highs}\n- Lows: {btc_lows}\n- Closes: {btc_closes}"
-    eth_prompt = f"\n\nETH-USD historical data:\n- Opens: {eth_opens}\n- Highs: {eth_highs}\n- Lows: {eth_lows}\n- Closes: {eth_closes}"
-    prompt = f"Analyze the pricing data from the Coinbase API call. Based on the data provided by Coinbase, please recommend an investment strategy based on user input.{btc_prompt}{eth_prompt}\n\nBTC-USD price: {btc_price}\nETH-USD price: {eth_price}"
-    body = {
-        "prompt": prompt,
-        "max_tokens": 585,
-        "temperature": 0.1
-    }
-    print("prompt: ", prompt)
-    response = requests.post(url, headers=headers, json=body, timeout=120)
-    print("response: ", response)
-    result = response.json()
-    print("result: ", result)
-    choices = result.get('choices', [])  # Get the value of 'choices', or an empty list if it doesn't exist
-    if choices:
-        completion = choices[0].get('text', '').strip()
-        return completion
-    else:
-        return ""
 
-# Create data dictionary
-data = {
-    "btc_data": btc_data,
-    "eth_data": eth_data,
-}
 
-# Get investment recommendation
-investment_recommendation = get_investment_recommendation(data["btc_data"], data["eth_data"])
+investment_recommendation = get_investment_recommendation(btc_data, eth_data, btc_opens, btc_highs, btc_lows, btc_closes, eth_opens, eth_highs, eth_lows, eth_closes, gpt_api)
 
 # Print investment recommendation
 print("Investment Recommendation:", investment_recommendation)
