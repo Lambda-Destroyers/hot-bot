@@ -22,7 +22,7 @@ with open('gpt_api.txt', 'r') as file:
 
 
 
-def get_prices(days):
+def get_prices(days, option):
     # Retrieve current prices for BTC-USD and ETH-USD
     btc_usd_price = get_current_price("BTC-USD", headers)
     eth_usd_price = get_current_price("ETH-USD", headers)
@@ -35,7 +35,7 @@ def get_prices(days):
 
     # Calculate the start and end dates
     end_date = datetime.datetime.now()
-    start_date = end_date - datetime.timedelta(days)
+    start_date = end_date - datetime.timedelta(int(days))
 
     # Retrieve historical data for BTC-USD
     btc_data = get_historical_data("BTC-USD", api_url, start_date, end_date)
@@ -52,8 +52,10 @@ def get_prices(days):
     eth_highs = [entry[2] for entry in eth_data]
     eth_lows = [entry[1] for entry in eth_data]
     eth_closes = [entry[4] for entry in eth_data]
+    user_option(btc_data, eth_data, btc_opens, btc_highs, btc_lows, btc_closes, eth_opens, eth_highs, eth_lows, eth_closes,gpt_api, days, option)
+    show_plot(btc_timestamps, btc_closes, btc_lows, btc_highs, eth_timestamps, eth_closes, eth_lows, eth_highs, days)
 
-def show_plot():
+def show_plot(btc_timestamps, btc_closes, btc_lows, btc_highs, eth_timestamps, eth_closes, eth_lows, eth_highs, days):
     # Plotting Bitcoin (BTC-USD) and Ethereum (ETH-USD) charts
     fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(10, 8))
     ax1.plot(btc_timestamps, btc_closes, color='blue')
@@ -71,8 +73,5 @@ def show_plot():
     plt.show()
 
 def get_option(days, option):
-    get_prices(days)
-    user_option(btc_data, eth_data, btc_opens, btc_highs, btc_lows, btc_closes, eth_opens, eth_highs, eth_lows, eth_closes, gpt_api, days, option)
-    show_plot()
-    print("This is the option: ", option)
-    print("These are the days of our lives...: ", days)
+    get_prices(days, option)
+   
