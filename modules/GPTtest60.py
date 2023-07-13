@@ -2,9 +2,11 @@ import requests
 import datetime
 import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
-from investment_recommendation import get_investment_recommendation
-from historical_getter import get_historical_data
-from current_price import get_current_price
+from modules.investment_recommendation import get_investment_recommendation
+from modules.historical_getter import get_historical_data
+from modules.current_price  import get_current_price
+from rich.console import Console
+console = Console()
 
 # Read the API key from api_key.txt file
 with open('api_key.txt', 'r') as file:
@@ -22,8 +24,8 @@ btc_usd_price = get_current_price("BTC-USD", headers)
 eth_usd_price = get_current_price("ETH-USD", headers)
 
 # Print current prices
-print("BTC-USD price:", btc_usd_price)
-print("ETH-USD price:", eth_usd_price)
+# print("BTC-USD price:", btc_usd_price)
+# print("ETH-USD price:", eth_usd_price)
 
 # Historical chart code (including API information)
 api_url = "https://api.pro.coinbase.com/products"
@@ -71,10 +73,12 @@ ax2.set_ylabel("Price (USD)")
 ax2.tick_params(axis='x', rotation=45)
 
 plt.tight_layout()
-plt.show()
+#plt.show()
 
 
-investment_recommendation = get_investment_recommendation(btc_data, eth_data, btc_opens, btc_highs, btc_lows, btc_closes, eth_opens, eth_highs, eth_lows, eth_closes, gpt_api)
+def gpt_60(option):
+    investment_recommendation = get_investment_recommendation(btc_data, eth_data, btc_opens, btc_highs, btc_lows,   btc_closes, eth_opens, eth_highs, eth_lows, eth_closes, gpt_api, option)
 
-# Print investment recommendation
-print("Investment Recommendation:", investment_recommendation)
+    # Print investment recommendation
+    print("Investment Recommendation:", investment_recommendation)  
+    console.print('Press "enter" to exit')
