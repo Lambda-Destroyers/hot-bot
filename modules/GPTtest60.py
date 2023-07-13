@@ -33,7 +33,7 @@ api_url = "https://api.pro.coinbase.com/products"
 
 # Calculate the start and end dates
 end_date = datetime.datetime.now()
-start_date = end_date - datetime.timedelta(days=60)
+start_date = end_date - datetime.timedelta(days)
 
 
 # Retrieve historical data for BTC-USD
