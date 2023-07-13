@@ -6,6 +6,7 @@ from modules.investment_recommendation import get_investment_recommendation
 from modules.historical_getter import get_historical_data
 from modules.current_price  import get_current_price
 from rich.console import Console
+from modules.option import user_option
 console = Console()
 
 # Read the API key from api_key.txt file
@@ -76,9 +77,5 @@ plt.tight_layout()
 #plt.show()
 
 
-def gpt_60(option):
-    investment_recommendation = get_investment_recommendation(btc_data, eth_data, btc_opens, btc_highs, btc_lows,   btc_closes, eth_opens, eth_highs, eth_lows, eth_closes, gpt_api, option)
-
-    # Print investment recommendation
-    print("Investment Recommendation:", investment_recommendation)  
-    console.print('Press "enter" to exit')
+def get_option(option):
+    user_option(btc_data, eth_data, btc_opens, btc_highs, btc_lows, btc_closes, eth_opens, eth_highs, eth_lows, eth_closes, gpt_api, option)
