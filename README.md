@@ -46,4 +46,5 @@ Test Coverage:
 pytest --cov tests/
 
 Advanced Trade API
-<!-- Read the documentation:  https://docs.cloud.coinbase.com/advanced-trade-api/docs/welcome-->
+https://docs.cloud.coinbase.com/advanced-trade-api/docs/welcome
+
