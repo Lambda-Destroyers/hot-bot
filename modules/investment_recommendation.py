@@ -7,6 +7,8 @@ def get_investment_recommendation(btc_data, eth_data, btc_opens, btc_highs, btc_
         "Authorization": f"Bearer {gpt_api}",
     }
     btc_price = btc_data[0][4]
+    print("Here are the current prices for bitcoin and etherium")
+    # print("Please wait, generating your response...")
     eth_price = eth_data[0][4]
     btc_prompt = f"\n\nBTC-USD historical data:\n- Opens: {btc_opens}\n- Highs: {btc_highs}\n- Lows: {btc_lows}\n- Closes: {btc_closes}"
     eth_prompt = f"\n\nETH-USD historical data:\n- Opens: {eth_opens}\n- Highs: {eth_highs}\n- Lows: {eth_lows}\n- Closes: {eth_closes}"

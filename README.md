@@ -47,8 +47,6 @@ python3/python filename.py
 Test Coverage: 
 pytest --cov tests/
 
-pip3 install requests_mock
-
 
 Advanced Trade API Docs
 https://docs.cloud.coinbase.com/advanced-trade-api/docs/welcome
