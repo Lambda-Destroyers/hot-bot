@@ -18,6 +18,6 @@ def get_investment_recommendation(btc_data, eth_data, btc_opens, btc_highs, btc_
            }
     response = requests.post(url, headers=headers, json=body)
     result = response.json()
-    choices = result.get('choices', [])  # Get the value of 'choices', or an empty list if it doesn't exist
-    completion = choices[0]['text'].strip() if choices else ''  # Use an empty string if 'choices' is empty
+    choices = result.get('choices', []) 
+    completion = choices[0]['text'].strip() if choices else '' 
     return completion
