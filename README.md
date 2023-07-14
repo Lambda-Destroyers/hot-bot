@@ -35,9 +35,11 @@ pip3 install rich --- Library that allows you to create visually appealing and i
 pip3 install requests --- This allows for requests from API
 pip3 install matplotlib --- library for creating charts
 pip3 install pytest-cov --- This is for coverage testing
-pip3 install openapi --- chatGPT api
+pip3 install openapi --- chatGPT api + API key
 
 
+Look at main features of rich:
+python3/python -m rich
 
 Run file:
 python3/python filename.py
@@ -45,6 +47,11 @@ python3/python filename.py
 Test Coverage: 
 pytest --cov tests/
 
-Advanced Trade API
+pip3 install requests_mock
+
+
+Advanced Trade API Docs
 https://docs.cloud.coinbase.com/advanced-trade-api/docs/welcome
 
+ChatGPT API Docs
+https://platform.openai.com/docs/api-reference/introduction

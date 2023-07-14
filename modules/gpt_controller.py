@@ -16,7 +16,6 @@ headers = {
     "CB-ACCESS-KEY": api_key,
 }
 
-
 with open('gpt_api.txt', 'r') as file:
     gpt_api = file.read().strip()
 
