@@ -248,7 +248,7 @@ def user_input(days, option):
 def end_programm():
     console.print('\nPress "enter" to [red]exit[/red]')
     input()
-    exit()
+    # exit()
 
 def presentation():
     console.clear()
